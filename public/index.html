@@ -4,14 +4,21 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title><%= htmlWebpackPlugin.options.title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <script>
+    const WIDTH = 750 //设计稿尺寸
+    const setView = () => {
+      document.documentElement.style.fontSize = (100 * screen.width / WIDTH) + 'px'
+    }
+    window.onorientationchange = setView
+    setView()
+  </script>
+  <title>sz-mobie</title>
 </head>
 
 <body>
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+    <strong>We're sorry but sz-mobie doesn't work properly without JavaScript enabled.
       Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
