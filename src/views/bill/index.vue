@@ -35,8 +35,10 @@
         <p>项目管理</p>
       </div>
       <div class="item">
-        <i class="iconfont iconhuazhuangpin" style="color:#646566"></i>
-        <p>商品管理</p>
+        <router-link :to="{ name: 'goods' }">
+          <i class="iconfont iconhuazhuangpin" style="color:#646566"></i>
+          <p>商品管理</p>
+        </router-link>
       </div>
       <div class="item">
         <i class="iconfont iconkucunchaxun-" style="color:#ffd01e"></i>
@@ -121,10 +123,10 @@ export default {
       }
     }
     .quickSale {
-      background-color: #f95572;
+      background-color: #fa6759;
     }
     .sale {
-      background-color: #ff975f;
+      background-color: #ff9700;
     }
   }
   .menu {
@@ -139,7 +141,8 @@ export default {
         font-size: 0.8rem;
       }
       p {
-        font-size: 0.36rem;
+        font-size: 0.32rem;
+        color: #333;
       }
     }
   }

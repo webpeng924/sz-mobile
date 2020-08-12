@@ -8,7 +8,8 @@ import 'vant/lib/index.css'
 import loadingIndex from "./loadingIndex";
 // 引入样式
 import './assets/css/reset.css'
-
+//全局过滤器
+import './assets/js/filter.js'
 axios.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded'
 axios.interceptors.request.use(config => {
