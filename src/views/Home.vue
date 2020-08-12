@@ -1,19 +1,31 @@
 <template>
   <div class="home">
     <router-view class="home_content" />
-    <van-tabbar v-model="active" route>
-      <van-tabbar-item icon="home-o" to="/one" replace name="one"
-        >标签</van-tabbar-item
-      >
-      <van-tabbar-item icon="search" to="/two" replace name="two"
-        >标签</van-tabbar-item
-      >
-      <van-tabbar-item icon="friends-o" to="/three" replace name="three"
-        >标签</van-tabbar-item
-      >
-      <van-tabbar-item icon="setting-o" to="/four" replace name="four"
-        >标签</van-tabbar-item
-      >
+    <van-tabbar route>
+      <van-tabbar-item to="/bill">
+        <span>首页</span>
+        <template #icon>
+          <i class="iconfont iconhome"></i>
+        </template>
+      </van-tabbar-item>
+      <van-tabbar-item icon="search" to="/data">
+        <span>数据</span>
+        <template #icon>
+          <i class="iconfont iconshuju"></i>
+        </template>
+      </van-tabbar-item>
+      <van-tabbar-item icon="friends-o" to="/member">
+        <span>会员</span>
+        <template #icon>
+          <i class="iconfont iconhuiyuan"></i>
+        </template>
+      </van-tabbar-item>
+      <van-tabbar-item icon="setting-o" to="/mine">
+        <span>我的</span>
+        <template #icon>
+          <i class="iconfont iconwodexinxi"></i>
+        </template>
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -23,12 +35,17 @@
 
 export default {
   name: "Home",
-  data() {
+  data () {
     return {
-      active: "one"
     };
   },
   components: {}
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home {
+  .home_content {
+    height: calc(100% - 50px);
+  }
+}
+</style>
