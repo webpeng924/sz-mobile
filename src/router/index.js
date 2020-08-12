@@ -11,24 +11,24 @@ const routes = [
     component: Home,
     children: [
       {
-        path: "/one",
-        name: "One",
-        component: () => import("../views/one.vue")
+        path: "/bill",
+        name: "bill",
+        component: () => import("../views/bill")
       },
       {
-        path: "/two",
-        name: "Two",
-        component: () => import("../views/two.vue")
+        path: "/data",
+        name: "data",
+        component: () => import("../views/data")
       },
       {
-        path: "/three",
-        name: "Three",
-        component: () => import("../views/three.vue")
+        path: "/member",
+        name: "member",
+        component: () => import("../views/member")
       },
       {
-        path: "/four",
-        name: "Four",
-        component: () => import("../views/four.vue")
+        path: "/mine",
+        name: "mine",
+        component: () => import("../views/mine/index.vue")
       }
     ]
   },
@@ -50,6 +50,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let user = sessionStorage.getItem("userInfo");
   if (user || to.path == "/login") {
+    if (to.path == '/') {
+      next({
+        path: "/bill"
+      });
+    }
     next();
   } else {
     next({
