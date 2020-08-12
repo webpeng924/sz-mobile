@@ -71,6 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .login {
+  
   padding: 2rem 1.2rem 0;
   .title {
     font-size: 0.36rem;
