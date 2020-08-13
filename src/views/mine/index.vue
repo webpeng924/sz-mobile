@@ -25,7 +25,7 @@
           <div class="info_name_case">
             <span class="info_name mr5">李易峰</span>
             <div class="info_office">
-              <i class="iconfont iconhuangguan1"></i>
+              <i class="iconfont iconhuangguan"></i>
               <span>店长</span>
             </div>
           </div>
@@ -118,13 +118,13 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/css/base.css';
 .mine {
+  font-size: .32rem /* 16/50 */;
   .mine_header {
     height: 4.66rem;
     border-bottom: 1px solid #f3f3f3;
     .mine_title {
-      text-align: left;
+      // text-align: left;
       .mine_title_name {
-        font-size: 0.4rem /* 20/50 */;
         font-weight: 700;
       }
       .iconxiangxia {
@@ -134,6 +134,7 @@ export default {
     .mine_tags {
       display: flex;
       justify-content: space-between;
+      text-align: center;
       .mine_tags_item {
         display: flex;
         flex-direction: column;
@@ -159,9 +160,7 @@ export default {
         .await_font {
           color: #dcdddf;
         }
-        .mine_tags_name {
-          font-size: 0.36rem /* 18/50 */;
-        }
+      
       }
     }
     .mine_info_case {
@@ -177,12 +176,10 @@ export default {
           display: flex;
           align-items: center;
           .info_name {
-            font-size: 0.36rem /* 18/50 */;
             font-weight: 700;
           }
           .info_office {
             padding: 0.04rem 0.12rem;
-            font-size: 0.24rem;
             color: #fff;
             border-radius: 10px;
             background-color: #dfb270;
@@ -193,19 +190,20 @@ export default {
           }
         }
         .info-telephone {
-          text-align: left;
+          // text-align: left;
           margin-top: 0.06rem;
-          font-size: 0.36rem;
+          font-size: .28rem /* 14/50 */;
         }
       }
       .mine_info_avatar {
         color: #fff;
-        line-height: 1rem;
-        width: 1rem;
-        height: 1rem;
+        line-height: 0.8rem;
+        width: 0.8rem;
+        height: 0.8rem;
         border-radius: 50%;
         background-color: #f9be83;
         font-size: 0.5rem;
+        text-align: center;
       }
       .right {
         margin-left: 0.1rem;
@@ -224,6 +222,7 @@ export default {
         line-height: 0.6rem;
         border-radius: 50%;
         margin-right: 0.1rem /* 5/50 */;
+        text-align: center;
         .iconfont {
           font-size: 0.4rem /* 20/50 */;
         }
@@ -235,8 +234,7 @@ export default {
         border-bottom: 1px solid #bbb;
         .content_text {
           flex: 1;
-          text-align: left;
-          font-size: 0.32rem;
+          // text-align: left;
         }
         .content_right {
           color: #cfcfd2;
