@@ -25,7 +25,7 @@
           <div class="info_name_case">
             <span class="info_name mr5">李易峰</span>
             <div class="info_office">
-              <i class="iconfont iconhuangguan"></i>
+              <i class="iconfont iconhuangguan1"></i>
               <span>店长</span>
             </div>
           </div>
@@ -36,21 +36,21 @@
       </div>
     </div>
     <div class="mine_content p10">
-      <div :class="{active:checkIndex ===index}"
-           class="mine_content_item "
-           v-for="(item,index) in options"
-           :key="index"
-           @touchstart='checkOn(index)'
-           @touchend='checkOut'
-           @click="go">
-        <div :class="item.iconClass"
-             class="content_icon">
-          <i :class="item.icon"
-             class="iconfont"></i>
+      <div
+        :class="{ active: checkIndex === index }"
+        class="mine_content_item "
+        v-for="(item, index) in options"
+        :key="index"
+        @touchstart="checkOn(index)"
+        @touchend="checkOut"
+        @click="go"
+      >
+        <div :class="item.iconClass" class="content_icon">
+          <i :class="item.icon" class="iconfont"></i>
         </div>
         <div class="content_case p10">
           <div class="content_text">
-            {{item.text}}
+            {{ item.text }}
           </div>
           <div class="iconfont iconfanhui-right content_right"></div>
         </div>
@@ -65,66 +65,67 @@ export default {
   props: {},
   data() {
     return {
-      checkIndex: '',
+      checkIndex: "",
       options: [
         {
-          text: '帮助文档',
-          icon: 'iconbangzhuwendang',
-          iconClass: 'help',
+          text: "帮助文档",
+          icon: "iconbangzhuwendang",
+          iconClass: "help"
         },
         {
-          text: '意见反馈',
-          icon: 'iconyijianfankui',
-          iconClass: 'opinion',
+          text: "意见反馈",
+          icon: "iconyijianfankui",
+          iconClass: "opinion"
         },
         {
-          text: '专属客服',
-          icon: 'iconkefu',
-          iconClass: 'contact',
+          text: "专属客服",
+          icon: "iconkefu",
+          iconClass: "contact"
         },
         {
-          text: '设置',
-          icon: 'iconshezhi',
-          iconClass: 'set',
+          text: "设置",
+          icon: "iconshezhi",
+          iconClass: "set"
         },
         {
-          text: '关于我们',
-          icon: 'iconguanyuwomen',
-          iconClass: 'about',
+          text: "关于我们",
+          icon: "iconguanyuwomen",
+          iconClass: "about"
         },
         {
-          text: '退出登录',
-          icon: 'icontuichudenglu',
-          iconClass: 'sign_out',
-        },
-      ],
-    }
+          text: "退出登录",
+          icon: "icontuichudenglu",
+          iconClass: "sign_out"
+        }
+      ]
+    };
   },
   methods: {
     // hover效果
     checkOn(index) {
-      this.checkIndex = index
+      this.checkIndex = index;
     },
     checkOut() {
-      this.checkIndex = ''
+      this.checkIndex = "";
     },
-    go(){
+    go() {
       console.log(1);
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/base.css';
+@import "../../assets/css/base.css";
 .mine {
-  font-size: .32rem /* 16/50 */;
+  font-size: 0.32rem /* 16/50 */;
   .mine_header {
     height: 4.66rem;
     border-bottom: 1px solid #f3f3f3;
     .mine_title {
-      // text-align: left;
+      text-align: left;
       .mine_title_name {
+        font-size: 0.4rem /* 20/50 */;
         font-weight: 700;
       }
       .iconxiangxia {
@@ -134,7 +135,6 @@ export default {
     .mine_tags {
       display: flex;
       justify-content: space-between;
-      text-align: center;
       .mine_tags_item {
         display: flex;
         flex-direction: column;
@@ -160,7 +160,9 @@ export default {
         .await_font {
           color: #dcdddf;
         }
-      
+        .mine_tags_name {
+          font-size: 0.36rem /* 18/50 */;
+        }
       }
     }
     .mine_info_case {
@@ -176,10 +178,12 @@ export default {
           display: flex;
           align-items: center;
           .info_name {
+            font-size: 0.36rem /* 18/50 */;
             font-weight: 700;
           }
           .info_office {
             padding: 0.04rem 0.12rem;
+            font-size: 0.24rem;
             color: #fff;
             border-radius: 10px;
             background-color: #dfb270;
@@ -190,20 +194,19 @@ export default {
           }
         }
         .info-telephone {
-          // text-align: left;
+          text-align: left;
           margin-top: 0.06rem;
-          font-size: .28rem /* 14/50 */;
+          font-size: 0.36rem;
         }
       }
       .mine_info_avatar {
         color: #fff;
-        line-height: 0.8rem;
-        width: 0.8rem;
-        height: 0.8rem;
+        line-height: 1rem;
+        width: 1rem;
+        height: 1rem;
         border-radius: 50%;
         background-color: #f9be83;
         font-size: 0.5rem;
-        text-align: center;
       }
       .right {
         margin-left: 0.1rem;
@@ -222,7 +225,6 @@ export default {
         line-height: 0.6rem;
         border-radius: 50%;
         margin-right: 0.1rem /* 5/50 */;
-        text-align: center;
         .iconfont {
           font-size: 0.4rem /* 20/50 */;
         }
@@ -234,7 +236,8 @@ export default {
         border-bottom: 1px solid #bbb;
         .content_text {
           flex: 1;
-          // text-align: left;
+          text-align: left;
+          font-size: 0.32rem;
         }
         .content_right {
           color: #cfcfd2;
