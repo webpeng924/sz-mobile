@@ -184,8 +184,8 @@ export default {
     },
     // 筛选时间增加按钮
     timeUp() {
-      this.selectTime = +this.selectTime - MILLISECOND;
       if (this.downTime) return;
+      this.selectTime = +this.selectTime - MILLISECOND;
     },
     //筛选时间减少按钮
     timeDown() {
