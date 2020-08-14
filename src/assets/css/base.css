@@ -40,3 +40,8 @@
 .m20{
   margin: .4rem /* 20/50 */;
 }
+
+.mainRed,.bgRed{
+  color:rgb(254, 0, 67);
+}
+

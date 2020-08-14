@@ -204,3 +204,17 @@ select {
   /* 文字溢出显示省略号 */
   text-overflow: ellipsis;
 }
+
+.van-nav-bar{
+  background-color:rgb(254, 0, 67); 
+  color: #fff;
+  height: 1.1rem;
+}
+.van-nav-bar__title{
+  color: #fff;
+}
+
+.van-nav-bar .van-icon {
+  color: #fff;
+  font-size: .36rem;
+}

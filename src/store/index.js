@@ -6,11 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     LOADING: false,
-    userInfo: {}
+    userInfo: {},
+    nowGoods: ''
   },
   mutations: {
     setJson (state, value) {
       state.userInfo = value
+    },
+    setGoods (state, value) {
+      state.nowGoods = value
     },
     showLoading (state) {
       state.LOADING = true

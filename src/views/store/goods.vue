@@ -7,9 +7,13 @@
       @search="onSearch"
       background="#fe0043"
     >
-      <i slot="left" class="iconfont iconfanhui-left"></i>
+      <i
+        slot="left"
+        class="van-icon van-icon-arrow-left van-nav-bar__arrow"
+        @click="$router.go(-1)"
+      ></i>
       <template #action>
-        <i class="iconfont icontianjia"></i>
+        <i class="iconfont icontianjia" @click="$router.push({name:'addgoods'})"></i>
       </template>
     </van-search>
 
@@ -22,12 +26,13 @@
       >
         <template #content>
           <van-card
-            num="2"
-            price="2.00"
-            title="商品标题"
+            :num="v.number"
+            :price="v.price"
+            :title="v.goods_name"
             :thumb="v.img|imgUrl"
             v-for="(v,k) in XMlist"
             :key="k"
+            @click="chooseItem(v)"
           />
         </template>
       </van-tree-select>
@@ -59,6 +64,11 @@ export default {
         }
       })
     },
+    chooseItem (data) {
+      console.log(data)
+      this.$store.commit('setGoods', data);
+      this.$router.push({ name: 'goodsInfo' })
+    },
     // 获取产品分类
     async getCPcate () {
       const res = await this.$axios.get('/api?datatype=get_goodscate&storeid=' + this.storeid)
@@ -75,6 +85,7 @@ export default {
         params: {
           storeid: this.storeid,
           status: 1,
+          type: 1,
           cate: active,
           search: this.keyword
         }
@@ -103,7 +114,8 @@ export default {
   .van-search {
     padding-left: 0;
     i {
-      padding: 0 0.2rem;
+      padding: 0 0.3rem;
+      font-size: 0.36rem;
       color: #fff;
     }
   }

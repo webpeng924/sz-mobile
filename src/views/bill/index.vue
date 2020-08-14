@@ -81,6 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .bill {
+  text-align: center;
   .top {
     height: 1.2rem;
     background-color: red;
