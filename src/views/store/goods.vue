@@ -50,13 +50,11 @@ export default {
       active: 0,
       storeid: sessionStorage.getItem('storeid'),
       items: [{ text: '分组 1' }, { text: '分组 2' }],
-      XMlist: []
+      XMlist: [],
     }
   },
   methods: {
-    onSearch () {
-
-    },
+    onSearch () { },
     changeActive () {
       this.items.forEach((v, k) => {
         if (k == this.active) {
@@ -71,9 +69,11 @@ export default {
     },
     // 获取产品分类
     async getCPcate () {
-      const res = await this.$axios.get('/api?datatype=get_goodscate&storeid=' + this.storeid)
+      const res = await this.$axios.get(
+        '/api?datatype=get_goodscate&storeid=' + this.storeid
+      )
       console.log(res)
-      res.data.data.forEach(item => {
+      res.data.data.forEach((item) => {
         this.$set(item, 'text', item.title)
       })
       this.items = res.data.data
@@ -87,8 +87,8 @@ export default {
           status: 1,
           type: 1,
           cate: active,
-          search: this.keyword
-        }
+          search: this.keyword,
+        },
       })
       console.log(res)
       if (res.data.data) {
@@ -102,10 +102,12 @@ export default {
       }
     },
   },
-  created () { this.getCPcate() },
+  created () {
+    this.getCPcate()
+  },
   mounted () { },
   watch: {},
-  computed: {}
+  computed: {},
 }
 </script>
 
@@ -121,6 +123,9 @@ export default {
   }
   .List {
     height: calc(100% - 1.1rem);
+  }
+  /deep/.van-search__action {
+    background-color: #fe0043;
   }
 }
 </style>

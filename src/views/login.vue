@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       password: '',
-      name: ''
+      name: '',
     }
   },
   methods: {
@@ -42,7 +42,7 @@ export default {
       if (!this.password) return this.$message.error('请输入密码')
       let params = {
         username: this.name,
-        password: this.password
+        password: this.password,
       }
       // try {
       const res = await this.$axios.get('/api?datatype=login', { params })
@@ -50,8 +50,8 @@ export default {
       if (res.data.code == 1) {
         this.$toast(res.data.msg)
         sessionStorage.setItem('storeid', res.data.data.storeid)
-        this.$store.commit('setJson', res.data.data);
-        sessionStorage.setItem('userInfo', JSON.stringify(res.data.data));
+        this.$store.commit('setJson', res.data.data)
+        sessionStorage.setItem('userInfo', JSON.stringify(res.data.data))
         this.$router.push({ name: 'Home' })
       } else {
         this.$toast(res.data.msg)
@@ -59,13 +59,18 @@ export default {
       // }
       // catch (err) {
       //   alert('登录出错')
-      // }
-    }
+      // },
+    },
+    logout () {
+      this.$axios.get('/api?datatype=logout&id=7')
+    },
   },
-  created () { },
+  created () {
+    // this.logout()
+  },
   mounted () { },
   watch: {},
-  computed: {}
+  computed: {},
 }
 </script>
 

@@ -4,8 +4,10 @@ Vue.filter('imgUrl', function (data) {
 })
 
 Vue.filter('time', function (data, type) {
+
   if (!data) return ''
   let date = new Date(data)
+
   let Y = date.getFullYear()
   let M = date.getMonth() + 1
   let D = date.getDate()

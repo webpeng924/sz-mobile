@@ -36,21 +36,21 @@
       </div>
     </div>
     <div class="mine_content p10">
-      <div :class="{active:checkIndex ===index}"
-           class="mine_content_item "
-           v-for="(item,index) in options"
-           :key="index"
-           @touchstart='checkOn(index)'
-           @touchend='checkOut'
-           @click="go">
-        <div :class="item.iconClass"
-             class="content_icon">
-          <i :class="item.icon"
-             class="iconfont"></i>
+      <div
+        :class="{ active: checkIndex === index }"
+        class="mine_content_item "
+        v-for="(item, index) in options"
+        :key="index"
+        @touchstart="checkOn(index)"
+        @touchend="checkOut"
+        @click="go"
+      >
+        <div :class="item.iconClass" class="content_icon">
+          <i :class="item.icon" class="iconfont"></i>
         </div>
         <div class="content_case p10">
           <div class="content_text">
-            {{item.text}}
+            {{ item.text }}
           </div>
           <div class="iconfont iconfanhui-right content_right"></div>
         </div>
@@ -65,59 +65,60 @@ export default {
   props: {},
   data() {
     return {
-      checkIndex: '',
+      checkIndex: "",
       options: [
         {
-          text: '帮助文档',
-          icon: 'iconbangzhuwendang',
-          iconClass: 'help',
+          text: "帮助文档",
+          icon: "iconbangzhuwendang",
+          iconClass: "help"
         },
         {
-          text: '意见反馈',
-          icon: 'iconyijianfankui',
-          iconClass: 'opinion',
+          text: "意见反馈",
+          icon: "iconyijianfankui",
+          iconClass: "opinion"
         },
         {
-          text: '专属客服',
-          icon: 'iconkefu',
-          iconClass: 'contact',
+          text: "专属客服",
+          icon: "iconkefu",
+          iconClass: "contact"
         },
         {
-          text: '设置',
-          icon: 'iconshezhi',
-          iconClass: 'set',
+          text: "设置",
+          icon: "iconshezhi",
+          iconClass: "set"
         },
         {
-          text: '关于我们',
-          icon: 'iconguanyuwomen',
-          iconClass: 'about',
+          text: "关于我们",
+          icon: "iconguanyuwomen",
+          iconClass: "about"
         },
         {
-          text: '退出登录',
-          icon: 'icontuichudenglu',
-          iconClass: 'sign_out',
-        },
-      ],
-    }
+          text: "退出登录",
+          icon: "icontuichudenglu",
+          iconClass: "sign_out"
+        }
+      ]
+    };
   },
   methods: {
     // hover效果
     checkOn(index) {
-      this.checkIndex = index
+      this.checkIndex = index;
     },
     checkOut() {
-      this.checkIndex = ''
+      this.checkIndex = "";
     },
-    go(){
+    go() {
       console.log(1);
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/base.css';
+@import "../../assets/css/base.css";
 .mine {
+  font-size: 0.32rem /* 16/50 */;
   .mine_header {
     height: 4.66rem;
     border-bottom: 1px solid #f3f3f3;
