@@ -1,7 +1,7 @@
 <template>
   <div class="bill">
     <div class="top">
-      <div class="nameView">MM门店</div>
+      <div class="nameView">{{shopInfo.shop_name}}</div>
       <div class="erweima">
         <i class="iconfont iconsaomiao"></i>
         <span>扫一扫</span>
@@ -18,21 +18,25 @@
       </div>
     </div>
     <div class="menu">
-      <div class="item">
+      <div class="item" @click="showadd=true">
         <i class="iconfont icontianjiahuiyuan" style="color:#ff8917"></i>
         <p>会员登记</p>
       </div>
       <div class="item">
-        <i class="iconfont iconhuiyuanchongzhi" style="color:#3dec91"></i>
-        <p>会员充值</p>
+        <router-link :to="{ name: 'member' }">
+          <i class="iconfont iconhuiyuanchongzhi" style="color:#3dec91"></i>
+          <p>会员充值</p>
+        </router-link>
       </div>
       <div class="item">
         <i class="iconfont iconchongzhijiluicon" style="color:#ff8917"></i>
         <p>购买次卡</p>
       </div>
       <div class="item">
-        <i class="iconfont iconxiangmuguanli1" style="color:#ff1933"></i>
-        <p>项目管理</p>
+        <router-link :to="{ name: 'items' }">
+          <i class="iconfont iconxiangmuguanli1" style="color:#ff1933"></i>
+          <p>项目管理</p>
+        </router-link>
       </div>
       <div class="item">
         <router-link :to="{ name: 'goods' }">
@@ -44,11 +48,11 @@
         <i class="iconfont iconkucunchaxun-" style="color:#ffd01e"></i>
         <p>库存</p>
       </div>
-      <div class="item">
+      <div class="item" @click="showding=true">
         <i class="iconfont icondinghuo" style="color:#809fe0"></i>
         <p>订货</p>
       </div>
-      <div class="item">
+      <div class="item" @click="$toast('敬请期待')">
         <i class="iconfont icongengduo" style="color:#ccc"></i>
         <p>更多功能</p>
       </div>
@@ -60,6 +64,20 @@
         <div class="rt">短信营销</div>
       </div>
     </div>
+
+    <van-overlay :show="showding" @click="showding = false">
+      <div class="wrapper" @click.stop>
+        <p>扫描下方二维码进入订货商城</p>
+        <img src="../../assets/images/dinghuoPic.png" alt />
+      </div>
+    </van-overlay>
+    <van-overlay :show="showadd" @click="showadd = false">
+      <div class="wrapper" @click.stop>
+        <p>请扫面下方二维码</p>
+        <p>进入会员专用小程序注册会员</p>
+        <img src="../../assets/images/zhuceewm.jpg" alt />
+      </div>
+    </van-overlay>
   </div>
 </template>
 
@@ -69,6 +87,9 @@ export default {
   props: {},
   data () {
     return {
+      showding: false,
+      showadd: false,
+      shopInfo: JSON.parse(sessionStorage.getItem('shopInfo'))
     }
   },
   methods: {},
@@ -164,6 +185,17 @@ export default {
         line-height: 1.2rem;
         text-align: center;
       }
+    }
+  }
+  .wrapper {
+    margin: 2rem 1.2rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    p {
+      margin-bottom: 0.2rem;
+    }
+    img {
+      width: 3.5rem;
     }
   }
 }

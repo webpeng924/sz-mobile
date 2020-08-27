@@ -2,15 +2,15 @@
   <div class="mine">
     <div class="mine_header p10">
       <div class="mine_title">
-        <span class="mine_title_name">mm门店</span>
-        <i class="iconfont iconxiangxia"></i>
+        <span class="mine_title_name">{{shopInfo.shop_name}}</span>
+        <!-- <i class="iconfont iconxiangxia"></i> -->
       </div>
       <div class="mine_tags p10">
-        <div class="mine_tags_item">
+        <div class="mine_tags_item" @click="$router.push({name:'stafflist'})">
           <div class="mine_tags_icon iconfont iconyuangong clerk"></div>
           <div class="mine_tags_name mtb10">店员管理</div>
         </div>
-        <div class="mine_tags_item">
+        <div class="mine_tags_item" @click="$router.push({name:'shopinfo'})">
           <div class="mine_tags_icon iconfont iconmendianxinxi store"></div>
           <div class="mine_tags_name mtb10">门店信息</div>
         </div>
@@ -23,22 +23,24 @@
         <div class="iconfont icongerenxin mr5"></div>
         <div class="mine_info">
           <div class="info_name_case">
-            <span class="info_name mr5">李易峰</span>
+            <span class="info_name mr5">{{userinfo.name}}</span>
             <div class="info_office">
               <i class="iconfont iconhuangguan1"></i>
-              <span>店长</span>
+              <span>{{userinfo.job}}</span>
             </div>
           </div>
-          <div class="info-telephone">1566663333</div>
+          <div class="info-telephone">{{userinfo.mobile}}</div>
         </div>
-        <div class="mine_info_avatar">李</div>
+        <div class="mine_info_avatar">
+          <img :src="userinfo.avatar|imgUrl" alt />
+        </div>
         <i class="right iconfont iconfanhui-right"></i>
       </div>
     </div>
     <div class="mine_content p10">
       <div
         :class="{ active: checkIndex === index }"
-        class="mine_content_item "
+        class="mine_content_item"
         v-for="(item, index) in options"
         :key="index"
         @touchstart="checkOn(index)"
@@ -49,9 +51,7 @@
           <i :class="item.icon" class="iconfont"></i>
         </div>
         <div class="content_case p10">
-          <div class="content_text">
-            {{ item.text }}
-          </div>
+          <div class="content_text">{{ item.text }}</div>
           <div class="iconfont iconfanhui-right content_right"></div>
         </div>
       </div>
@@ -63,7 +63,7 @@
 export default {
   components: {},
   props: {},
-  data() {
+  data () {
     return {
       checkIndex: "",
       options: [
@@ -97,33 +97,43 @@ export default {
           icon: "icontuichudenglu",
           iconClass: "sign_out"
         }
-      ]
+      ],
+      userinfo: '',
+      shopInfo: JSON.parse(sessionStorage.getItem('shopInfo'))
     };
   },
   methods: {
     // hover效果
-    checkOn(index) {
+    checkOn (index) {
       this.checkIndex = index;
     },
-    checkOut() {
+    checkOut () {
       this.checkIndex = "";
     },
-    go() {
+    go () {
       console.log(1);
+    }
+  },
+  created () {
+    let obj = JSON.parse(sessionStorage.getItem('userInfo'))
+    if (obj) {
+      this.userinfo = obj
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/base.css";
+@import '../../assets/css/base.css';
 .mine {
+  text-align: center;
   font-size: 0.32rem /* 16/50 */;
   .mine_header {
     height: 4.66rem;
     border-bottom: 1px solid #f3f3f3;
     .mine_title {
       text-align: left;
+      margin-bottom: 0.2rem;
       .mine_title_name {
         font-size: 0.4rem /* 20/50 */;
         font-weight: 700;
@@ -207,6 +217,11 @@ export default {
         border-radius: 50%;
         background-color: #f9be83;
         font-size: 0.5rem;
+        overflow: hidden;
+        img {
+          width: 100%;
+          border-radius: 50%;
+        }
       }
       .right {
         margin-left: 0.1rem;
@@ -233,7 +248,7 @@ export default {
       .content_case {
         flex: 1;
         display: flex;
-        border-bottom: 1px solid #bbb;
+        border-bottom: 1px solid #e1e1e1;
         .content_text {
           flex: 1;
           text-align: left;

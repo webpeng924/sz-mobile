@@ -52,7 +52,7 @@ export default {
         sessionStorage.setItem('storeid', res.data.data.storeid)
         this.$store.commit('setJson', res.data.data)
         sessionStorage.setItem('userInfo', JSON.stringify(res.data.data))
-        this.$router.push({ name: 'Home' })
+        this.getInfo(res.data.data.storeid)
       } else {
         this.$toast(res.data.msg)
       }
@@ -60,6 +60,16 @@ export default {
       // catch (err) {
       //   alert('登录出错')
       // },
+    },
+    async getInfo (storeid) {
+      const res = await this.$axios.get('/api?datatype=more&storeid=' + storeid)
+      console.log(res)
+      if (res.data.code == 1) {
+        this.shopInfo = res.data.data
+        let data = JSON.stringify(res.data.data)
+        sessionStorage.setItem('shopInfo', data)
+        this.$router.push({ name: 'Home' })
+      }
     },
     logout () {
       this.$axios.get('/api?datatype=logout&id=7')

@@ -13,7 +13,7 @@
         @click="$router.go(-1)"
       ></i>
       <template #action>
-        <i class="iconfont icontianjia" @click="$router.push({name:'addgoods'})"></i>
+        <i class="iconfont icontianjia" @click="$router.push({name:'additems'})"></i>
       </template>
     </van-search>
 
@@ -28,16 +28,12 @@
           <van-card
             :num="v.number"
             :price="v.price"
-            :title="v.goods_name"
+            :title="v.name"
             :thumb="v.img|imgUrl"
             v-for="(v,k) in XMlist"
             :key="k"
             @click="chooseItem(v)"
-          >
-            <template #tags>
-              <!-- <van-tag plain type="danger">停用</van-tag> -->
-            </template>
-          </van-card>
+          />
         </template>
       </van-tree-select>
     </div>
@@ -68,13 +64,13 @@ export default {
     },
     chooseItem (data) {
       console.log(data)
-      this.$store.commit('setGoods', data);
-      this.$router.push({ name: 'goodsInfo', query: { id: data.goods_id } })
+      // this.$store.commit('setGoods', data);
+      this.$router.push({ name: 'itemsInfo', query: { id: data.id } })
     },
-    // 获取产品分类
+    // 获取项目分类
     async getCPcate () {
       const res = await this.$axios.get(
-        '/api?datatype=get_goodscate&storeid=' + this.storeid
+        '/api?datatype=get_itemcate&storeid=' + this.storeid
       )
       console.log(res)
       res.data.data.forEach((item) => {
@@ -85,7 +81,7 @@ export default {
     },
     // 获取XMlist
     async getXMlist (active) {
-      const res = await this.$axios.get('/api?datatype=get_skulist', {
+      const res = await this.$axios.get('/api?datatype=get_item_list', {
         params: {
           storeid: this.storeid,
           status: 1,
@@ -99,7 +95,7 @@ export default {
         this.XMlist = res.data.data
       } else {
         if (this.showSearch) {
-          this.$message.error('未搜索到该分类下项目或产品')
+          this.$message.error('未搜索到该分类下项目')
           this.keyword = ''
         }
         this.XMlist = []

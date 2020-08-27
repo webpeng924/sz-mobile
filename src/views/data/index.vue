@@ -1,18 +1,22 @@
 <template>
   <div class="data">
     <div class="data_top">数据</div>
-    <van-dropdown-menu>
+    <!-- <van-dropdown-menu>
       <van-dropdown-item v-model="value" :options="option" title="mm门店" />
-    </van-dropdown-menu>
+    </van-dropdown-menu>-->
     <div class="data_cell_case p10">
       <div class="data_title">
         <div class="title_left">
-          <span>我的收入</span>
+          <span>收入</span>
           <i class="iconfont iconguanyuwomen"></i>
         </div>
         <div class="title_right">
-          <div class="title_number"><span class="money">0</span>笔</div>
-          <div class="title_price"><span class="money">0.00</span>元</div>
+          <div class="title_number">
+            <span class="money">0</span>笔
+          </div>
+          <div class="title_price">
+            <span class="money">0.00</span>元
+          </div>
         </div>
       </div>
       <div class="data_time">
@@ -36,7 +40,7 @@
             {{ item.title }}
           </div>
         </template>
-        <template #cellMiddle> {{ item.number }}笔 </template>
+        <template #cellMiddle>{{ item.number }}笔</template>
         <template #cellRight>
           {{ item.price }}
           <i class="iconfont iconfanhui-right"></i>
@@ -46,25 +50,17 @@
     <div class="line"></div>
     <div class="data_cell_case">
       <div class="data_title p10">
-        <span class="title_left">我的收益</span>
+        <span class="title_left">营业明细</span>
       </div>
       <div class="data_time_select m20">
-        <div
-          class="select select_left"
-          @click="timeUp"
-          :class="{ active: downTime }"
-        >
+        <div class="select select_left" @click="timeUp" :class="{ active: downTime }">
           <i class="iconfont iconfanhui-left"></i>
         </div>
         <div class="select" @click="open('select')">
           <span>{{ selectTime | time("y-m-d") }}</span>
           <i class="iconfont iconxiangxia"></i>
         </div>
-        <div
-          class="select select_right"
-          @click="timeDown"
-          :class="{ active: upTime }"
-        >
+        <div class="select select_right" @click="timeDown" :class="{ active: upTime }">
           <i class="iconfont iconfanhui-right"></i>
         </div>
       </div>
@@ -75,7 +71,7 @@
             {{ item.name }}
           </div>
         </template>
-        <template #cellMiddle> {{ item.number }}笔 </template>
+        <template #cellMiddle>{{ item.number }}笔</template>
         <template #cellRight>
           {{ item.price }}
           <i class="iconfont iconfanhui-right"></i>
@@ -108,7 +104,7 @@ export default {
     vueCell
   },
   props: {},
-  data() {
+  data () {
     return {
       value: 0, //店铺选择
       option: [
@@ -149,7 +145,7 @@ export default {
   },
   methods: {
     // 点击展开日历
-    open(type) {
+    open (type) {
       this.show = !this.show;
       this.type = type;
       switch (type) {
@@ -166,7 +162,7 @@ export default {
       }
     },
     // 日历确定按钮
-    submit() {
+    submit () {
       switch (this.type) {
         case "start":
           this.startDate = this.currentDate;
@@ -183,18 +179,18 @@ export default {
       this.show = false;
     },
     // 筛选时间增加按钮
-    timeUp() {
+    timeUp () {
       if (this.downTime) return;
       this.selectTime = +this.selectTime - MILLISECOND;
     },
     //筛选时间减少按钮
-    timeDown() {
+    timeDown () {
       if (this.upTime) return;
       this.selectTime = +this.selectTime + MILLISECOND;
     }
   },
   watch: {
-    selectTime() {
+    selectTime () {
       let upLackTime = +MAXDATE - +this.selectTime;
       let downLackTime = +this.selectTime - +MINDATE;
       this.upTime = false;
@@ -211,7 +207,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/base.css";
+@import '../../assets/css/base.css';
 .data {
   .data_top {
     text-align: center;

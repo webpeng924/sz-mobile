@@ -1,34 +1,27 @@
 <template>
   <div class="member">
     <div class="member_search">
-      <van-search v-model="value"
-                  shape="round"
-                  background="#fff"
-                  placeholder="请输入搜索关键词" />
+      <van-search v-model="value" shape="round" background="#fff" placeholder="请输入搜索关键词" />
       <i class="iconfont iconsaomiao saomiao"></i>
     </div>
-    <div class="member_total p20">
-      共278位会员，总余额：112121331.0元，总积分：12123123
-    </div>
+    <div class="member_total">共{{memberlist.length}}位会员，总余额：{{totalmoney}}元</div>
     <div class="member_list_case">
-      <div class="member_list p10"
-           v-for="item in 10"
-           :key="item">
+      <div class="member_list p10" v-for="(v,k) in memberlist" :key="k" @click="getOneMember(v)">
         <div class="list_left">
-          <img src="https://img.yzcdn.cn/vant/cat.jpeg"
-               alt="">
+          <img :src="v.img|imgUrl" alt />
         </div>
         <div class="list_middle">
           <div class="list_middle_item">
-            <div class="list_name">李{{item}}</div>
-            <div class="list_time">2020-08-14</div>
+            <div class="list_name">姓名：{{v.name}}</div>
+            <div class="list_time">{{v.cardtype}}</div>
           </div>
           <div class="list_middle_item">
-            <div class="list_balance">
-              余额:<span>¥ 123123123</span>
-            </div>
             <div class="list_integral">
-              手机号:<span>13888888888</span>
+              手机号:
+              <span>{{v.mobile}}</span>
+            </div>
+            <div class="list_balance">
+              <span>¥ {{v.balance}}</span>
             </div>
           </div>
         </div>
@@ -44,14 +37,43 @@
 export default {
   components: {},
   props: {},
-  data() {
+  data () {
     return {
       value: '',
+      storeid: sessionStorage.getItem('storeid'),
+      keyword: '',
+      totalmoney: '',
+      memberlist: []
     }
   },
-  methods: {},
-  created() {},
-  mounted() {},
+  methods: {
+    async getList () {
+      const res = await this.$axios.get('/api?datatype=get_memberlist', {
+        params: {
+          storeid: this.storeid,
+          search: this.keyword
+        }
+      })
+      console.log(res)
+      if (res.data.code == 1) {
+        this.memberlist = res.data.data
+        let num = 0
+        this.memberlist.forEach(item => {
+          num += Number(item.balance)
+        })
+        this.totalmoney = num.toFixed(2)
+      } else {
+        this.memberlist = []
+      }
+    },
+    getOneMember (v) {
+
+    }
+  },
+  created () {
+    this.getList()
+  },
+  mounted () { },
   watch: {},
   computed: {},
 }
@@ -74,15 +96,18 @@ export default {
   .member_total {
     background-color: #f5f6fa;
     font-size: 0.28rem /* 14/50 */;
+    height: 0.82rem;
+    line-height: 0.82rem;
+    padding-left: 0.3rem;
   }
   .member_list_case {
-    height: calc(100% - 136px);
+    height: calc(100% - 1.9rem);
     overflow: auto;
     .member_list {
       display: flex;
       height: 60px;
       align-items: center;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #eee;
       .list_left {
         width: 70px;
         height: 60px;
@@ -96,7 +121,6 @@ export default {
       .list_middle {
         flex: 1;
         height: 100%;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -109,9 +133,11 @@ export default {
         }
       }
       .list_right {
-        margin-left: .1rem /* 5/50 */;
+        margin-left: 0.1rem /* 5/50 */;
         i {
-          font-size: 20px;
+          font-size: 0.34rem;
+          padding-left: 0.1rem;
+          color: #ccc;
         }
       }
     }

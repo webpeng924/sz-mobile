@@ -9,6 +9,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    redirect: '/bill',
     children: [
       {
         path: "/bill",
@@ -35,9 +36,6 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/login.vue")
   },
@@ -48,16 +46,52 @@ const routes = [
       import("../views/store/goods.vue")
   },
   {
+    path: "/items",
+    name: "items",
+    component: () =>
+      import("../views/store/items.vue")
+  },
+  {
     path: "/addgoods",
     name: "addgoods",
     component: () =>
       import("../views/store/addgoods.vue")
   },
   {
+    path: "/additems",
+    name: "additems",
+    component: () =>
+      import("../views/store/additems.vue")
+  },
+  {
     path: "/goodsInfo",
     name: "goodsInfo",
     component: () =>
       import("../views/store/goodsInfo.vue")
+  },
+  {
+    path: "/itemsInfo",
+    name: "itemsInfo",
+    component: () =>
+      import("../views/store/itemsinfo.vue")
+  },
+  {
+    path: "/shopinfo",
+    name: "shopinfo",
+    component: () =>
+      import("../views/mine/shopInfo.vue")
+  },
+  {
+    path: "/stafflist",
+    name: "stafflist",
+    component: () =>
+      import("../views/mine/stafflist.vue")
+  },
+  {
+    path: "/addstaff",
+    name: "addstaff",
+    component: () =>
+      import("../views/mine/addstaff.vue")
   }
 ];
 
@@ -68,12 +102,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let user = sessionStorage.getItem("userInfo");
   if (user || to.path == "/login") {
-    if (to.path == '/') {
-      next({
-        path: "/bill"
-      });
-    }
+    // if (to.path == '/') {
+    //   next({
+    //     path: "/bill"
+    //   });
+    // } else {
     next();
+    // }
   } else {
     next({
       path: "/login"

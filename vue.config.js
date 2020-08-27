@@ -7,6 +7,7 @@ module.exports = {
   devServer: {
     open: true
   },
+  publicPath: process.env.NODE_ENV === 'production' ? '/mobile/' : '/',
   chainWebpack (config) {
     config.resolve.alias
       .set('components', resolve('src/components'))
