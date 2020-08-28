@@ -13,8 +13,18 @@
       </van-search>
       <!-- <i class="iconfont iconsaomiao saomiao"></i> -->
     </div>
+    <van-tabs v-model="active" @click="onClick">
+      <van-tab title="全部" name="1"></van-tab>
+      <van-tab title="仅在职" name="2"></van-tab>
+    </van-tabs>
     <div class="list">
-      <van-cell title="单元格" :label="v.mobile" v-for="(v,k) in workerlist" :key="k">
+      <van-cell
+        title="单元格"
+        :label="v.mobile"
+        v-for="(v,k) in workerlist"
+        :key="k"
+        @click="toEdit(v)"
+      >
         <!-- 使用 title 插槽来自定义标题 -->
         <template #icon>
           <van-icon name="manager-o" class="manager-o" size="30" />
@@ -29,36 +39,47 @@
         </template>
       </van-cell>
     </div>
+    <div class="son" v-if="showedit">
+      <editStaff :info="info" @close="setdata"></editStaff>
+    </div>
   </div>
 </template>
 
 <script>
+import editStaff from './addstaff'
 export default {
-  components: {},
+  components: { editStaff },
   props: {},
   data () {
     return {
       value: '',
       storeid: sessionStorage.getItem('storeid'),
-      workerlist: []
+      workerlist: [],
+      showedit: false,
+      info: '',
+      active: '1'
     }
   },
   methods: {
     async getlist () {
       if (this.value) {
+        this.active = '1'
         this.search()
       } else {
         const res = await this.$axios.get('/api?datatype=get_staff_list', {
           params: {
             storeid: this.storeid,
-            is_li: 0,
-            is_wei: 1
+            is_li: this.active == 1 ? 0 : 1,
+            is_wei: this.active == 1 ? 0 : 1
           }
         })
         if (res.data.code == 1) {
           this.workerlist = res.data.data
         }
       }
+    },
+    onClick () {
+      this.getlist()
     },
     async search () {
       const res = await this.$axios.get('/api?datatype=search_staff_list', {
@@ -70,6 +91,18 @@ export default {
       if (res.data.code == 1) {
         this.workerlist = res.data.data
       }
+    },
+    setdata (data) {
+      this.showedit = false
+      if (this.value) {
+        this.search()
+      } else {
+        this.getlist()
+      }
+    },
+    toEdit (v) {
+      this.info = JSON.stringify(v)
+      this.showedit = true
     }
   },
   created () {

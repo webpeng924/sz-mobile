@@ -1,9 +1,9 @@
 <template>
   <div class="addstaff">
-    <van-nav-bar :title="type==2?'修改员工资料':'新增员工'" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
+    <van-nav-bar :title="type==2?'修改员工资料':'新增员工'" left-arrow @click-left="back"></van-nav-bar>
     <div class="info">
       <div class="listgroup">
-        <van-field v-model="jobNo" label="编号" placeholder="请输入" required />
+        <van-field v-model="jobNo" label="编号" placeholder="请输入" required :readonly="type==2" />
         <van-field v-model="name" label="姓名" placeholder="请输入" required />
         <van-field v-model="mobile" label="手机号码" placeholder="请输入" type="tel" required />
         <van-field name="uploader" label="员工头像">
@@ -119,14 +119,13 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: ['info'],
   data () {
     return {
       uploader: [],
       avatar: '',
       id: 0,
       type: 1,
-      background: '',
       jobNo: '',
       name: '',
       sex: '男',
@@ -151,6 +150,13 @@ export default {
     }
   },
   methods: {
+    back () {
+      if (this.type == 1) {
+        this.$router.go(-1)
+      } else {
+        this.$emit('close')
+      }
+    },
     serviceJobConfirm (value) {
       this.serviceJob = value
       this.serviceJobDialog = false
@@ -219,14 +225,32 @@ export default {
       console.log(res)
       if (res.data.code == 1) {
         this.$toast(res.data.msg)
-        this.$router.go(-1)
+        this.back()
       } else {
         this.$toast(res.data.msg)
       }
     }
   },
-  created () { },
-  mounted () { },
+  created () {
+    console.log(this.info)
+    if (this.info) {
+      this.type = 2
+      let obj = JSON.parse(this.info)
+      this.id = obj.id
+      this.jobNo = obj.job_no
+      this.name = obj.name
+      this.sex = obj.sex == 1 ? '男' : '女'
+      this.mobile = obj.mobile
+      this.section = obj.section
+      this.serviceJob = obj.service_job
+      this.job = obj.job
+      this.nowStatus = obj.now_status == 1 ? '在职' : obj.now_status == 2 ? '未在职' : '离职'
+      this.yyStatus = obj.yy_status == 1 ? true : false
+      this.username = obj.username
+      this.password = obj.password
+      this.remark = obj.remark
+    }
+  },
   watch: {},
   computed: {}
 }
@@ -235,6 +259,7 @@ export default {
 <style lang="scss" scoped>
 .addstaff {
   background-color: #f9f9f9;
+  height: 100%;
   .info {
     height: calc(100% - 2rem);
     overflow-y: auto;

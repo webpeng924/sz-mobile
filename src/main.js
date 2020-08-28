@@ -7,6 +7,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import loadingIndex from "./loadingIndex";
 // 引入样式
+import './assets/css/base.css'
 import './assets/css/reset.css'
 //全局过滤器
 import './assets/js/filter.js'
