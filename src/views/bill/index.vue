@@ -2,10 +2,10 @@
   <div class="bill">
     <div class="top">
       <div class="nameView">{{shopInfo.shop_name}}</div>
-      <div class="erweima">
+      <!-- <div class="erweima">
         <i class="iconfont iconsaomiao"></i>
         <span>扫一扫</span>
-      </div>
+      </div>-->
     </div>
     <div class="openBill">
       <div class="quickSale">

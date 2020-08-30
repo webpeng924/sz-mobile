@@ -117,6 +117,12 @@ const routes = [
     name: "payok",
     component: () =>
       import("@/components/payok.vue")
+  },
+  {
+    path: "/closeBook",
+    name: "closeBook",
+    component: () =>
+      import("@/components/closeBook.vue")
   }
 ];
 

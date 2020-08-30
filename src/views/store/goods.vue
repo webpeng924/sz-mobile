@@ -68,9 +68,12 @@ export default {
       })
     },
     chooseItem (data) {
-      console.log(data)
-      this.$store.commit('setGoods', data);
-      this.$router.push({ name: 'goodsInfo', query: { id: data.goods_id } })
+      if (this.from == 'open') {
+        this.$emit('add', data)
+      } else {
+        this.$router.push({ name: 'goodsInfo', query: { id: data.goods_id } })
+      }
+      // this.$store.commit('setGoods', data);
     },
     // 获取产品分类
     async getCPcate () {
