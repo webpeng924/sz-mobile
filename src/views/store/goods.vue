@@ -29,7 +29,7 @@
             :num="v.number"
             :price="v.price"
             :title="v.goods_name"
-            :thumb="v.img|imgUrl"
+            :thumb="v.pic|imgUrl"
             v-for="(v,k) in XMlist"
             :key="k"
             @click="chooseItem(v)"
@@ -47,14 +47,15 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: ['from'],
   data () {
     return {
       keyword: '',
       active: 0,
       storeid: sessionStorage.getItem('storeid'),
-      items: [{ text: '分组 1' }, { text: '分组 2' }],
+      items: [],
       XMlist: [],
+      status: 0
     }
   },
   methods: {
@@ -88,7 +89,7 @@ export default {
       const res = await this.$axios.get('/api?datatype=get_skulist', {
         params: {
           storeid: this.storeid,
-          status: 1,
+          status: this.status,
           type: 1,
           cate: active,
           search: this.keyword,
@@ -107,6 +108,9 @@ export default {
     },
   },
   created () {
+    if (this.from == 'open') {
+      this.status = 1
+    }
     this.getCPcate()
   },
   mounted () { },
@@ -117,6 +121,7 @@ export default {
 
 <style lang="scss" scoped>
 .goods {
+  height: 100%;
   .van-search {
     padding-left: 0;
     i {

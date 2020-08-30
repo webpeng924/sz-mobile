@@ -63,7 +63,8 @@
             <van-switch v-model="is_stop" size="20" active-color="#fe0043" />
           </template>
         </van-field>
-        <van-field v-model="remark" label="备注" />
+        <!-- <van-field v-model="remark" label="备注" /> -->
+        <van-field v-model="remark" rows="1" autosize label="备注" type="textarea" />
       </div>
     </div>
     <van-button color="#fe0043" block @click="submit">保存</van-button>

@@ -24,9 +24,10 @@
       <van-cell title="项目分类" :value="goodsinfo.title" />
       <van-cell title="归属部门" :value="goodsinfo.belong_job" />
       <van-cell title="是否停用">
-        <van-switch v-model="is_stop" size="20" active-color="#fe0043" />
+        <van-switch v-model="is_stop" size="20" active-color="#fe0043" disabled />
       </van-cell>
-      <van-cell title="备注" :value="goodsinfo.remark" />
+      <!-- <van-cell title="备注" :value="goodsinfo.remark" />-->
+      <van-field v-model="goodsinfo.remark" rows="1" autosize label="备注" type="textarea" readonly />
     </div>
   </div>
 </template>

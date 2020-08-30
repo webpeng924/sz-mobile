@@ -9,12 +9,20 @@
     </div>
     <div class="openBill">
       <div class="quickSale">
-        <i class="iconfont iconxiao-fei"></i>
-        快速消费
+        <router-link :to="{ name: 'quickmoney' }">
+          <div class="quickSale">
+            <i class="iconfont iconxiao-fei"></i>
+            快速消费
+          </div>
+        </router-link>
       </div>
       <div class="sale">
-        <i class="iconfont iconkaidan"></i>
-        开单收银
+        <router-link :to="{ name: 'opennew' }">
+          <div class="sale">
+            <i class="iconfont iconkaidan"></i>
+            开单收银
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="menu">
@@ -146,9 +154,11 @@ export default {
     }
     .quickSale {
       background-color: #fa6759;
+      color: #fff;
     }
     .sale {
       background-color: #ff9700;
+      color: #fff;
     }
   }
   .menu {

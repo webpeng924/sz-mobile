@@ -5,46 +5,56 @@
         <van-icon name="edit" size="18" @click="$router.push({name:'addgoods',query:{id:id}})" />
       </template>
     </van-nav-bar>
-    <div class="topTit">
-      <van-image
-        width="1rem"
-        height="1rem"
-        fit="cover"
-        :src="goodsinfo.pic|imgUrl"
-        style="position: absolute;left: 0.16rem;top: 0.16rem;"
-      />
-      <van-cell
-        :title="goodsinfo.goods_name"
-        :value="'￥'+goodsinfo.price"
-        :label="'编号：'+goodsinfo.goods_no"
-        title-class="one-txt-cut"
-      />
-    </div>
-    <div class="group">
-      <van-cell title="产品分类" :value="goodsinfo.title" />
-      <van-cell title="当前库存" :value="goodsinfo.number" />
-      <van-cell title="标准单位" :value="goodsinfo.goods_unit" />
-      <van-cell title="采购价格" :value="goodsinfo.in_cost" />
-      <van-cell title="规格描述" :value="goodsinfo.goods_spec_format" />
-    </div>
-    <div class="group">
-      <van-cell title="供应商" :value="goodsinfo.supplier_id" />
-      <van-cell title="是否停用">
-        <van-switch v-model="is_stop" size="20" active-color="#fe0043" />
-      </van-cell>
-      <van-cell title="停止销售">
-        <van-switch v-model="state" size="20" active-color="#fe0043" />
-      </van-cell>
-      <van-cell title="备注" :value="goodsinfo.remark" />
-    </div>
-    <div class="group btn">
-      <div class="ite">
-        <i class="iconfont iconruku"></i>
-        <p>入库</p>
+    <div class="list">
+      <div class="topTit">
+        <van-image
+          width="1rem"
+          height="1rem"
+          fit="cover"
+          :src="goodsinfo.pic|imgUrl"
+          style="position: absolute;left: 0.16rem;top: 0.16rem;"
+        />
+        <van-cell
+          :title="goodsinfo.goods_name"
+          :value="'￥'+goodsinfo.price"
+          :label="'编号：'+goodsinfo.goods_no"
+          title-class="one-txt-cut"
+        />
       </div>
-      <div class="ite">
-        <i class="iconfont iconchuku" style="background-color:#ff976a"></i>
-        <p>出库</p>
+      <div class="group">
+        <van-cell title="产品分类" :value="goodsinfo.title" />
+        <van-cell title="当前库存" :value="goodsinfo.number" />
+        <van-cell title="标准单位" :value="goodsinfo.goods_unit" />
+        <van-cell title="采购价格" :value="goodsinfo.in_cost" />
+        <van-cell title="规格描述" :value="goodsinfo.goods_spec_format" />
+      </div>
+      <div class="group">
+        <van-cell title="供应商" :value="goodsinfo.supplier_id" />
+        <van-cell title="是否停用">
+          <van-switch v-model="is_stop" size="20" active-color="#fe0043" disabled />
+        </van-cell>
+        <van-cell title="停止销售">
+          <van-switch v-model="state" size="20" active-color="#fe0043" disabled />
+        </van-cell>
+        <!-- <van-cell title="备注" :value="goodsinfo.remark" /> -->
+        <van-field
+          v-model="goodsinfo.remark"
+          rows="1"
+          autosize
+          label="备注"
+          type="textarea"
+          readonly
+        />
+      </div>
+      <div class="group btn">
+        <div class="ite">
+          <i class="iconfont iconruku"></i>
+          <p>入库</p>
+        </div>
+        <div class="ite">
+          <i class="iconfont iconchuku" style="background-color:#ff976a"></i>
+          <p>出库</p>
+        </div>
       </div>
     </div>
   </div>
@@ -96,6 +106,11 @@ export default {
 <style lang="scss" scoped>
 .goodsInfo {
   background-color: #f1f1f1;
+  height: 100%;
+  .list {
+    height: calc(100% - 1.1rem);
+    overflow: auto;
+  }
   .topTit {
     background-color: #fff;
     margin-bottom: 0.2rem;

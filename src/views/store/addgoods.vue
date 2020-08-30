@@ -76,7 +76,8 @@
         </van-field>
         <van-field v-model="supplier" label="供应商" />
         <van-field v-model="goods_spec_format" label="规格描述" />
-        <van-field v-model="remark" label="备注" />
+        <!-- <van-field v-model="remark" label="备注" /> -->
+        <van-field v-model="remark" rows="1" autosize label="备注" type="textarea" />
       </div>
     </div>
     <van-button color="#fe0043" block @click="submit" size="20">保存</van-button>

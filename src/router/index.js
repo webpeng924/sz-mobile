@@ -92,6 +92,24 @@ const routes = [
     name: "addstaff",
     component: () =>
       import("../views/mine/addstaff.vue")
+  },
+  {
+    path: "/quickmoney",
+    name: "quickmoney",
+    component: () =>
+      import("@/components/quickmoney.vue")
+  },
+  {
+    path: "/opennew",
+    name: "opennew",
+    component: () =>
+      import("@/components/opennew.vue")
+  },
+  {
+    path: "/payok",
+    name: "payok",
+    component: () =>
+      import("@/components/payok.vue")
   }
 ];
 

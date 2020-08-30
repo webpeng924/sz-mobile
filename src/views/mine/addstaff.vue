@@ -109,7 +109,8 @@
       <div class="listgroup">
         <van-field v-model="username" label="登录账号" />
         <van-field v-model="password" label="登录密码" />
-        <van-field v-model="remark" label="备注" />
+        <!-- <van-field v-model="remark" label="备注" /> -->
+        <van-field v-model="remark" rows="1" autosize label="备注" type="textarea" />
       </div>
     </div>
     <van-button color="#fe0043" block @click="submit" size="20">保存</van-button>

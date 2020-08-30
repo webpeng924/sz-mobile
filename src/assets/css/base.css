@@ -41,8 +41,11 @@
   margin: .4rem /* 20/50 */;
 }
 
-.mainRed,.bgRed{
+.mainRed{
   color:rgb(254, 0, 67);
+}
+.bgRed{
+background-color:rgb(254, 0, 67);
 }
 
 .line::after{

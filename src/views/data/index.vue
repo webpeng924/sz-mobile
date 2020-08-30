@@ -1,9 +1,6 @@
 <template>
   <div class="data">
     <div class="data_top">数据</div>
-    <!-- <van-dropdown-menu>
-      <van-dropdown-item v-model="value" :options="option" title="mm门店" />
-    </van-dropdown-menu>-->
     <div class="data_cell_case p10">
       <div class="data_title">
         <div class="title_left">
@@ -31,7 +28,7 @@
             <van-icon name="arrow-down" />
           </div>
         </div>
-        <div class="time_now date">看今天</div>
+        <div class="time_now date" @click="getNow">看今天</div>
       </div>
       <vue-cell v-for="(item, index) in payList" :key="index">
         <template #cellLeft>
@@ -46,13 +43,26 @@
           <i class="iconfont iconfanhui-right"></i>
         </template>
       </vue-cell>
+      <vue-cell style="color:#df2e48" v-show="signBill">
+        <template #cellLeft>
+          <div class="cell_left">
+            <div class="cell_select"></div>
+            {{ signBill.title }}
+          </div>
+        </template>
+        <template #cellMiddle>{{ signBill.number }}笔</template>
+        <template #cellRight>
+          {{ signBill.price }}
+          <i class="iconfont iconfanhui-right"></i>
+        </template>
+      </vue-cell>
     </div>
     <div class="line"></div>
     <div class="data_cell_case">
       <div class="data_title p10">
         <span class="title_left">营业明细</span>
       </div>
-      <div class="data_time_select m20">
+      <!-- <div class="data_time_select m20">
         <div class="select select_left" @click="timeUp" :class="{ active: downTime }">
           <i class="iconfont iconfanhui-left"></i>
         </div>
@@ -63,7 +73,7 @@
         <div class="select select_right" @click="timeDown" :class="{ active: upTime }">
           <i class="iconfont iconfanhui-right"></i>
         </div>
-      </div>
+      </div>-->
       <vue-cell v-for="(item, index) in rankList" :key="index" class="rank_bgc">
         <template #cellLeft>
           <div class="cell_left">
@@ -78,24 +88,23 @@
         </template>
       </vue-cell>
     </div>
-    <van-popup v-model="show" position="bottom" round>
-      <van-datetime-picker
-        v-model="currentDate"
-        type="date"
-        title="选择年月日"
-        :min-date="minDate"
-        :max-date="maxDate"
-        @cancel="show = false"
-        @confirm="submit"
-      />
-    </van-popup>
+    <van-calendar
+      v-model="show"
+      type="range"
+      @confirm="onConfirm"
+      :show-confirm="false"
+      :allow-same-day="true"
+      :default-date="[new Date(startDate),new Date(endDate)]"
+      :min-date="minDate"
+      :max-date="maxDate"
+    />
   </div>
 </template>
 
 <script>
 import pub from "common/js/public.js";
 import vueCell from "components/cell.vue";
-const MINDATE = new Date(new Date(new Date(2020, 7, 8)).getTime());
+const MINDATE = new Date(new Date(2018, 1, 1).getTime());
 const MAXDATE = new Date(new Date(new Date().toLocaleDateString()).getTime());
 const MILLISECOND = 86400000;
 
@@ -113,23 +122,12 @@ export default {
         { text: "活动商品", value: 2 }
       ], //店铺数据
       payList: [
-        { title: "移动支付", number: 0, price: "0.00" },
-        { title: "现金", number: 0, price: "0.00" },
-        { title: "银行卡", number: 0, price: "100000.00" }
+        { title: "支付宝", number: 0, price: "0.00" }
       ], //支付列表数据
+      signBill: '',
+      storeid: sessionStorage.getItem('storeid'),
+      totalL: '',
       rankList: [
-        {
-          rank: 1,
-          name: "小李",
-          number: 0,
-          price: "1200.00"
-        },
-        {
-          rank: 2,
-          name: "小彭",
-          number: 0,
-          price: "0.00"
-        }
       ], //销售列表数据
       type: "", //选择日期类型
       currentDate: "", //绑定选择日期
@@ -143,40 +141,104 @@ export default {
       maxDate: MAXDATE //最大时间区间
     };
   },
+  created () {
+    this.getNow()
+  },
   methods: {
-    // 点击展开日历
-    open (type) {
-      this.show = !this.show;
-      this.type = type;
-      switch (type) {
-        case "start":
-          this.minDate = MINDATE;
-          break;
-        case "end":
-          this.maxDate = MAXDATE;
-          break;
-        case "select":
-          this.minDate = MINDATE;
-          this.maxDate = MAXDATE;
-          break;
+    getNow () {
+      // const a = this.formatDate(new Date())
+      this.startDate = new Date()
+      this.endDate = new Date()
+      this.getData()
+    },
+    formatDate (date) {
+      var y = date.getFullYear()
+      var m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      var d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      return y + '-' + m + '-' + d
+    },
+    async getData () {
+      let start = this.formatDate(this.startDate)
+      let end = this.formatDate(this.endDate)
+      const res = await this.$axios.get('/api?datatype=day_money_index', {
+        params: {
+          storeid: this.storeid,
+          start: start,
+          end: end
+        }
+      })
+      if (res.data.code == 1) {
+        this.total = 0
+        this.list1 = []
+        this.list2 = []
+        this.list3 = []
+        this.newcus = 0
+        this.oldcus = 0
+        this.nocard = 0
+        this.card = 0
+        this.chong = {
+          ccount: 0,
+          point: 0,
+          total: 0
+        }
+        this.kaika = {
+          ccount: 0,
+          point: 0,
+          total: 0
+        }
+        this.infolist = res.data.data
+        if (res.data.data.arr1) {
+          res.data.data.arr1.forEach(item => {
+            this.total += Number(item.stotal)
+            if (item.pay_type == 'card') {
+              this.list2.push(item)
+            } else if (item.pay_type == 'signbill') {
+              this.list3.push(item)
+            } else {
+              this.list1.push(item)
+            }
+          })
+          this.total = this.total.toFixed(2)
+        }
+        if (res.data.data.customer1) {
+          res.data.data.customer1.forEach(item => {
+            if (item.customer_type == 1) {
+              this.nocard = item.ccount
+            } else {
+              this.card = item.ccount
+            }
+          })
+          res.data.data.customer1.forEach(item => {
+            if (item.customer_type == 1) {
+              this.newcus = item.ccount
+            } else {
+              this.oldcus = item.ccount
+            }
+          })
+        }
+        if (res.data.data.member != null) {
+          res.data.data.member.forEach(item => {
+            if (item.type == '充值') {
+              this.chong = item
+            } else if (item.type == '卖卡') {
+              this.kaika = item
+            }
+          })
+        }
+        this.$toast('加载完成')
       }
     },
-    // 日历确定按钮
-    submit () {
-      switch (this.type) {
-        case "start":
-          this.startDate = this.currentDate;
-          this.minDate = this.currentDate;
-          break;
-        case "end":
-          this.endDate = this.currentDate;
-          this.maxDate = this.currentDate;
-          break;
-        case "select":
-          this.selectTime = this.currentDate;
-          break;
-      }
+    // 点击展开日历
+    open () {
+      this.show = !this.show;
+    },
+    onConfirm (date) {
+      console.log(date)
       this.show = false;
+      this.startDate = this.formatDate(date[0])
+      this.endDate = this.formatDate(date[1])
     },
     // 筛选时间增加按钮
     timeUp () {
@@ -185,7 +247,7 @@ export default {
     },
     //筛选时间减少按钮
     timeDown () {
-      if (this.upTime) return;
+      if (this.upTime) return this.$toast('已是最新日期');
       this.selectTime = +this.selectTime + MILLISECOND;
     }
   },
@@ -260,6 +322,9 @@ export default {
         background-color: #eff0f2;
       }
     }
+    // .cell:last-child {
+    //   color: #df2e48;
+    // }
     .cell_left {
       display: flex;
       align-items: center;

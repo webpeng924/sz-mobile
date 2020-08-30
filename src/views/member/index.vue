@@ -1,8 +1,14 @@
 <template>
   <div class="member">
     <div class="member_search">
-      <van-search v-model="value" shape="round" background="#fff" placeholder="请输入搜索关键词" />
-      <i class="iconfont iconsaomiao saomiao"></i>
+      <van-search
+        v-model="keyword"
+        shape="round"
+        background="#fff"
+        placeholder="请输入搜索关键词"
+        @input="getList"
+      />
+      <!-- <i class="iconfont iconsaomiao saomiao"></i> -->
     </div>
     <div class="member_total">共{{memberlist.length}}位会员，总余额：{{totalmoney}}元</div>
     <div class="member_list_case">
@@ -36,10 +42,10 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: ['from'],
   data () {
     return {
-      value: '',
+      keyword: '',
       storeid: sessionStorage.getItem('storeid'),
       keyword: '',
       totalmoney: '',
@@ -55,7 +61,7 @@ export default {
         }
       })
       console.log(res)
-      if (res.data.code == 1) {
+      if (res.data.code == 1 && res.data.data != null) {
         this.memberlist = res.data.data
         let num = 0
         this.memberlist.forEach(item => {
@@ -67,7 +73,9 @@ export default {
       }
     },
     getOneMember (v) {
-
+      if (this.from == 'open') {
+        this.$emit('add', v)
+      }
     }
   },
   created () {
@@ -82,6 +90,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/css/base.css';
 .member {
+  height: 100%;
   font-size: 0.28rem /* 14/50 */;
   .member_search {
     position: relative;

@@ -43,7 +43,7 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: ['from'],
   data () {
     return {
       keyword: '',
@@ -51,6 +51,7 @@ export default {
       storeid: sessionStorage.getItem('storeid'),
       items: [{ text: '分组 1' }, { text: '分组 2' }],
       XMlist: [],
+      status: 0
     }
   },
   methods: {
@@ -63,9 +64,12 @@ export default {
       })
     },
     chooseItem (data) {
-      console.log(data)
-      // this.$store.commit('setGoods', data);
-      this.$router.push({ name: 'itemsInfo', query: { id: data.id } })
+      if (this.from == 'open') {
+        this.$emit('add', data)
+      } else {
+        console.log(data)
+        this.$router.push({ name: 'itemsInfo', query: { id: data.id } })
+      }
     },
     // 获取项目分类
     async getCPcate () {
@@ -84,8 +88,8 @@ export default {
       const res = await this.$axios.get('/api?datatype=get_item_list', {
         params: {
           storeid: this.storeid,
-          status: 1,
-          type: 1,
+          status: this.status,
+          // type: 1,
           cate: active,
           search: this.keyword,
         },
@@ -103,6 +107,9 @@ export default {
     },
   },
   created () {
+    if (this.from == 'open') {
+      this.status = 1
+    }
     this.getCPcate()
   },
   mounted () { },
@@ -113,6 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 .goods {
+  height: 100%;
   .van-search {
     padding-left: 0;
     i {
