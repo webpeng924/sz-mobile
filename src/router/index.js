@@ -9,7 +9,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    redirect: '/bill',
+    redirect: "/bill",
     children: [
       {
         path: "/bill",
@@ -47,70 +47,64 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/userDetail/")
   },
   {
+    path: "/stock",
+    name: "stock",
+    component: () => import(/* webpackChunkName: "about" */ "../views/stock")
+  },
+  {
     path: "/goods",
     name: "goods",
-    component: () =>
-      import("../views/store/goods.vue")
+    component: () => import("../views/store/goods.vue")
   },
   {
     path: "/items",
     name: "items",
-    component: () =>
-      import("../views/store/items.vue")
+    component: () => import("../views/store/items.vue")
   },
   {
     path: "/addgoods",
     name: "addgoods",
-    component: () =>
-      import("../views/store/addgoods.vue")
+    component: () => import("../views/store/addgoods.vue")
   },
   {
     path: "/additems",
     name: "additems",
-    component: () =>
-      import("../views/store/additems.vue")
+    component: () => import("../views/store/additems.vue")
   },
   {
     path: "/goodsInfo",
     name: "goodsInfo",
-    component: () =>
-      import("../views/store/goodsInfo.vue")
+    component: () => import("../views/store/goodsInfo.vue")
   },
   {
     path: "/itemsInfo",
     name: "itemsInfo",
-    component: () =>
-      import("../views/store/itemsinfo.vue")
+    component: () => import("../views/store/itemsinfo.vue")
   },
   {
     path: "/shopinfo",
     name: "shopinfo",
-    component: () =>
-      import("../views/mine/shopInfo.vue")
+    component: () => import("../views/mine/shopInfo.vue")
   },
   {
     path: "/stafflist",
     name: "stafflist",
-    component: () =>
-      import("../views/mine/stafflist.vue")
+    component: () => import("../views/mine/stafflist.vue")
   },
   {
     path: "/addstaff",
     name: "addstaff",
-    component: () =>
-      import("../views/mine/addstaff.vue")
+    component: () => import("../views/mine/addstaff.vue")
   },
   {
     path: "/quickmoney",
     name: "quickmoney",
-    component: () =>
-      import("@/components/quickmoney.vue")
+    component: () => import("@/components/quickmoney.vue")
   },
   {
     path: "/opennew",
     name: "opennew",
-    component: () =>
-      import("@/components/opennew.vue")
+    component: () => import("@/components/opennew.vue")
   },
   {
     path: "/payok",
