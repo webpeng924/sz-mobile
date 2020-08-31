@@ -36,7 +36,7 @@
           <p>会员充值</p>
         </router-link>
       </div>
-      <div class="item">
+      <div class="item" @click="$toast('开发中')">
         <i class="iconfont iconchongzhijiluicon" style="color:#ff8917"></i>
         <p>购买次卡</p>
       </div>
@@ -53,8 +53,10 @@
         </router-link>
       </div>
       <div class="item">
-        <i class="iconfont iconkucunchaxun-" style="color:#ffd01e"></i>
-        <p>库存</p>
+        <router-link :to="{ name: 'stock' }">
+          <i class="iconfont iconkucunchaxun-" style="color:#ffd01e"></i>
+          <p>库存</p>
+        </router-link>
       </div>
       <div class="item" @click="showding=true">
         <i class="iconfont icondinghuo" style="color:#809fe0"></i>

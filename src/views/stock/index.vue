@@ -1,41 +1,26 @@
 <template>
   <div class="stock">
-    <van-nav-bar
-      title="库存"
-      left-arrow
-      @click-left="$router.go(-1)"
-    ></van-nav-bar>
+    <van-nav-bar title="库存" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
     <van-search
-      v-model="keyword"
+      v-model="searchtxt"
       shape="round"
       background="#fff"
       placeholder="请输入搜索关键词"
-      @input="getList"
+      @input="getCPlist"
     />
     <div class="content_case">
-      <div class="content_item">
+      <div class="content_item" v-for="(v,k) in tableData" :key="k">
         <div class="content_left">
-          <img
-            src="https://hb.rgoo.com/upload/shop/159574859714704.png"
-            alt=""
-          />
+          <img :src="v.pic|imgUrl" alt />
         </div>
         <div class="content_right">
           <div class="item_row">
-            <span class="item_col">
-              产品名称:产品004
-            </span>
-            <span class="item_col">
-              产品规格:瓶
-            </span>
+            <span class="item_col">产品名称:{{v.goods_name}}</span>
+            <span class="item_col">产品规格:{{v.goods_unit}}</span>
           </div>
           <div class="item_row">
-            <span class="item_col">
-              产品类别:美容
-            </span>
-            <span class="item_col">
-              数量:5
-            </span>
+            <span class="item_col">产品类别:{{v.title}}</span>
+            <span class="item_col">数量:{{v.number}}</span>
           </div>
         </div>
       </div>
@@ -47,28 +32,69 @@
 export default {
   components: {},
   props: {},
-  data() {
+  data () {
     return {
-      keyword: "",
-      memberlist: [{}]
-    };
-  },
-  methods: {
-    getList() {
-      console.log(1);
+      item: 1,
+      tableData: [],
+      add: false,
+      dialogVisible: false,
+      date: '',
+      searchtxt: '',
+      storeid: sessionStorage.getItem('storeid'),
     }
   },
-  created() {},
-  mounted() {},
   watch: {},
-  computed: {}
-};
+  computed: {},
+  methods: {
+    back () {
+      this.$emit('close')
+    },
+    async getCPlist () {
+      const res = await this.$axios.get('/api?datatype=get_skulist', {
+        params: {
+          storeid: this.storeid,
+          search: this.searchtxt,
+          type: 1
+        }
+      })
+      console.log(res)
+      if (res.data.code == 1 && res.data.data) {
+        this.tableData = res.data.data
+      } else {
+        this.tableData = []
+      }
+    },
+    formatDate (date) {
+      var y = date.getFullYear()
+      var m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      var d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      return y + '年' + m + '月' + d + '日'
+    },
+    openDate () {
+      this.dialogVisible = true
+      this.$nextTick(() => {
+        this.$refs.date.focus()
+      })
+    }
+  },
+  created () {
+    // let a = this.formatDate(new Date())
+    // this.date = a
+    this.getCPlist()
+  },
+  mounted () { }
+}
 </script>
 
 <style lang="scss" scoped>
 .stock {
+  height: 100%;
   background-color: #fbfbfb;
   .content_case {
+    height: calc(100% - 2.18rem);
+    overflow: auto;
     .content_item {
       background-color: #fff;
       padding: 10px;

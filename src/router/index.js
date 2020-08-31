@@ -33,19 +33,18 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: "/memberinfo",
+    name: "memberinfo",
+    component: () => import("../views/member/memberinfo.vue")
+  },
   {
     path: "/login",
     name: "login",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/login.vue")
   },
-  {
-    path: "/user-detail",
-    name: "user-detail",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/userDetail/")
-  },
+
   {
     path: "/stock",
     name: "stock",

@@ -75,6 +75,8 @@ export default {
     getOneMember (v) {
       if (this.from == 'open') {
         this.$emit('add', v)
+      } else {
+        this.$router.push({ name: 'memberinfo', params: { id: v.member_id } })
       }
     }
   },

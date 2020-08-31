@@ -45,7 +45,7 @@
         :key="index"
         @touchstart="checkOn(index)"
         @touchend="checkOut"
-        @click="go"
+        @click="go(item)"
       >
         <div :class="item.iconClass" class="content_icon">
           <i :class="item.icon" class="iconfont"></i>
@@ -103,6 +103,21 @@ export default {
     };
   },
   methods: {
+    logOut () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '确定退出吗？',
+      }).then(() => {
+        let id = JSON.parse(sessionStorage.getItem('userInfo')).id
+        this.$axios.get('/api?datatype=logout&id=' + id)
+        setTimeout(() => {
+          sessionStorage.clear()
+          this.$router.push({ name: 'login' })
+        })
+      }).catch(() => {
+        this.$toast('已取消');
+      });
+    },
     // hover效果
     checkOn (index) {
       this.checkIndex = index;
@@ -110,8 +125,11 @@ export default {
     checkOut () {
       this.checkIndex = "";
     },
-    go () {
+    go (item) {
       console.log(1);
+      if (item.text == '退出登录') {
+        this.logOut()
+      }
     }
   },
   created () {
