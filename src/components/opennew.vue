@@ -49,10 +49,7 @@
                   v-show="v.staff1"
                   @click="chooseItem=v;showstaff=true"
                 >服务人员：{{v.worker.name}}(No.{{v.worker.job_no}})</span>
-                <span
-                  v-show="!v.staff1&&v.typeid!=2"
-                  @click="chooseItem=v;chooseIndex=k;showstaff=true"
-                >未设置服务人员</span>
+                <span v-show="!v.staff1" @click="chooseSatff">未设置服务人员</span>
               </div>
               <div class="bom">
                 <span>
@@ -166,6 +163,12 @@ export default {
     }
   },
   methods: {
+    chooseSatff () {
+      if (!this.workerlist.length) return this.$toast('没有可选员工')
+      this.chooseItem = v
+      this.chooseIndex = k
+      this.showstaff = true
+    },
     // 切换标签
     beforeChange (name) {
       if (name == 4) {
@@ -183,6 +186,7 @@ export default {
           })
             .then(() => {
               this.member = ''
+              this.active = '3'
             })
             .catch(() => {
               // on cancel
@@ -211,7 +215,7 @@ export default {
     additem (v) {
       console.log(v)
       let discount = 1
-      if (this.member) {
+      if (this.member && this.member.item_discount) {
         discount = Number(this.member.item_discount) / 10
       }
       let obj = {
@@ -232,7 +236,7 @@ export default {
     addgood (v) {
       console.log(v)
       let discount = 1
-      if (this.member) {
+      if (this.member && this.member.goods_discount) {
         discount = Number(this.member.goods_discount) / 10
       }
       let obj = {
@@ -308,11 +312,11 @@ export default {
           member_id: this.member.member_id
         }
       })
-      if (res.data.code == 1) {
+      if (res.data.code == 1 && res.data.data) {
         this.member = Object.assign(this.member, res.data.data)
         if (this.chooslist.length) {
           this.chooslist.forEach(item => {
-            if (item.discount == 1) {
+            if (item.discount == 1 && this.member.goods_discount) {
               if (item.typeid == 2) {
                 item.discount = Number(this.member.goods_discount) / 10
               } else {
@@ -327,7 +331,7 @@ export default {
     setcika (v) {
       console.log(v)
       let discount = 1
-      if (this.member) {
+      if (this.member && this.member.goods_discount) {
         discount = Number(this.member.goods_discount) / 10
       }
       let obj = {

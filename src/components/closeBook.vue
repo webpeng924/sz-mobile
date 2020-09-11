@@ -115,7 +115,7 @@ export default {
       if (res.data.code == 1) {
         this.$toast('完成')
         setTimeout(() => {
-          this.$router.push({ name: 'payok', params: { money: this.distotal ? this.distotal : this.payPrice, paytype: this.title } })
+          this.$router.push({ name: 'payok', params: { money: this.distotal ? this.distotal : this.payPrice, paytype: this.title, obj: JSON.stringify(this.info) } })
         }, 1000);
       } else {
         this.$toast(res.data.msg)

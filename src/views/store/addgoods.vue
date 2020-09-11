@@ -106,7 +106,7 @@ export default {
       in_cost: '',
       categoryName: '',
       category_id: '',
-      warehouse: '总仓库',
+      warehouse: '门店仓库',
       goods_unit: '',
       supplier: '',
       supplier_id: '',

@@ -112,6 +112,12 @@ const routes = [
       import("@/components/payok.vue")
   },
   {
+    path: "/quickpayok",
+    name: "quickpayok",
+    component: () =>
+      import("@/components/quickpayok.vue")
+  },
+  {
     path: "/closeBook",
     name: "closeBook",
     component: () =>

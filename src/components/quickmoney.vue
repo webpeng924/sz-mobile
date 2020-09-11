@@ -67,7 +67,7 @@ export default {
       if (res.data.code == 1) {
         this.$toast('收款成功')
         setTimeout(() => {
-          this.$router.push({ name: 'payok', params: { money: this.value, paytype: this.title } })
+          this.$router.push({ name: 'quickpayok', params: { money: this.value, paytype: this.title } })
         }, 1000);
       } else {
         this.$toast('收款失败')

@@ -1,6 +1,10 @@
 import Vue from 'vue'
 Vue.filter('imgUrl', function (data) {
-  return 'https://hb.rgoo.com' + data
+  if (data) {
+    return 'https://hb.rgoo.com' + data
+  } else {
+    return 'https://hb.rgoo.com/upload/shop/moren.jpg'
+  }
 })
 
 Vue.filter('time', function (data, type) {
